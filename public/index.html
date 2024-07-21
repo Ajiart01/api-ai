@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY REST API</title>
+    <link href="https://i.imgur.com/AUbvTGK.jpeg" rel="icon">
+    <link href="https://i.imgur.com/AUbvTGK.jpeg" rel="apple-touch-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', times, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1, h2 {
+            color: #333;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
+            transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+        }
+
+        h2.ai-tools, h2.fb-tools, h2.downloader-api, h2.other-apis, h2.random-apis, h2.phub-tools, h2.search-api {
+            box-sizing: border-box;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+        }
+
+        h2:hover {
+            color: #007bff;
+            border-color: #007bff;
+            background-color: #f0f8ff;
+        }
+
+        p {
+            color: #666;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: none;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            max-height: 0;
+        }
+
+        ul.expanded {
+            display: block;
+            max-height: 1000px; /* Large enough to show all items */
+        }
+
+        li {
+            margin: 10px 0;
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-3px);
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        i {
+            margin-right: 10px;
+        }
+
+        .get-btn, .result-btn {
+            background-color: darkcyan;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 5px;
+        }
+
+        .get-btn:hover, .result-btn:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            color: #666;
+            font-size: 16px;
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        .swal2-popup {
+            background-color: #f4f4f9;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .swal2-image {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .swal2-confirm, .swal2-cancel {
+            border-radius: 8px !important;
+            padding: 10px 20px !important;
+            font-size: 14px !important;
+        }
+
+        .swal2-confirm {
+            background-color: #007bff !important;
+            color: white !important;
+        }
+
+        .swal2-cancel {
+            background-color: #ccc !important;
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-server"></i> MY REST APIS</h1>
+        <p id="dateTime"></p>
+        <p id="ping"></p>
+        <p>Welcome to my REST API</p>
+        <h2 class="ai-tools" onclick="toggleVisibility('ai-tools')"><i class="fas fa-robot"></i> AI TOOLS API</h2>
+        <ul id="ai-tools">
+            <li>
+                <a href="/api/gpt4o?question="><i class="fas fa-robot"></i> Gpt4o</a>
+                <button class="get-btn" onclick="fetchApi('/api/gpt4o?question=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/gpt4o?question=hi')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/v1/gpt4?ask="><i class="fas fa-robot"></i> Gpt4 v1</a>
+                <button class="get-btn" onclick="fetchApi('/api/v1/gpt4?ask=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/v1/gpt4?ask=hi')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/v2/gpt4?query="><i class="fas fa-robot"></i> Gpt4 v2</a>
+                <button class="get-btn" onclick="fetchApi('/api/v2/gpt4?query=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/v2/gpt4?query=hi')">RESULT</button>
+            </li>
+
+            <li>
+                <a href="/api/blackbox?prompt="><i class="fas fa-robot"></i> Blackbox</a>
+                <button class="get-btn" onclick="fetchApi('/api/blackbox?prompt=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/blackbox?prompt=hello')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/liner?prompt="><i class="fas fa-robot"></i> Liner Ai</a>
+                <button class="get-btn" onclick="fetchApi('/api/liner?prompt=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/liner?prompt=hello')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/"><i class="fas fa-robot"></i> Llama-2-70b</a>
+                <button class="get-btn" onclick="fetchApi('/api/llama?prompt=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/llama?prompt=hi')">RESULT</button>
+            </li>
+        </ul>
+        <h2 class="search-api" onclick="toggleVisibility('search-api')"><i class="fas fa-search"></i> SEARCH API</h2>
+        <ul id="search-api">
+            <li>
+                <a href="/api/google?query="><i class="fas fa-search"></i> Google Search</a>
+                <button class="get-btn" onclick="fetchApi('/api/google?query=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/google?query=facebook')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/chrome?query="><i class="fa-solid fa-magnifying-glass"></i> Chrome Search</a>
+                <button class="get-btn" onclick="fetchApi('/api/chrome?query=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/chrome?query=facebook')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/define?word="><i class="fas fa-book"></i> Define Word</a>
+                <button class="get-btn" onclick="fetchApi('/api/define?word=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/define?word=love')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/pinterest?search="><i class="fab fa-pinterest"></i> Pinterest</a>
+                <button class="get-btn" onclick="fetchApi('/api/pinterest?search=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/pinterest?search=cute cat - 10')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/tiksearch?search="><i class="fab fa-tiktok"></i> Tiktok Search</a>
+                <button class="get-btn" onclick="fetchApi('/api/tiksearch?search=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/tiksearch?search=DJ YA ODNA')">RESULT</button>
+            </li>
+        </ul>
+        <h2 class="fb-tools" onclick="toggleVisibility('fb-tools')"><i class="fab fa-facebook"></i> FB TOOLS API</h2>
+        <ul id="fb-tools">
+            <li>
+                <a href="/api/token-cookie?username=&password="><i class="fas fa-cookie"></i> Token & Cookie Getter</a>
+                <button class="get-btn" onclick="fetchApi('/api/token-cookie?username=&password=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/token-cookie?username=&password=')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/appstate?email=&password="><i class="fas fa-cookie"></i> Appstate Getter</a>
+                <button class="get-btn" onclick="fetchApi('/api/appstate?email=&password=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/appstate?email=&password=')">RESULT</button>
+            </li>
+        </ul>
+        <h2 class="downloader-api" onclick="toggleVisibility('downloader-api')"><i class="fas fa-circle-down"></i> DOWNLOADER API</h2>
+        <ul id="downloader-api">
+<li>
+                <a href="/api/anydl?url="><i class="fas fa-download"></i> Any Downloader</a>
+                <button class="get-btn" onclick="fetchApi('/api/anydl?url=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/anydl?url=')">RESULT</button>
+            </li>
+                        <li>
+                <a href="/api/facebookdl?link="><i class="fab fa-facebook"></i> Facebook Downloader</a>
+                <button class="get-btn" onclick="fetchApi('/api/facebookdl?link=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/facebookdl?link=')">RESULT</button>
+                        </li>
+            <li>
+                <a href="/api/tiktokdl?url="><i class="fab fa-tiktok"></i> Tiktok Downloader</a>
+                <button class="get-btn" onclick="fetchApi('/api/tiktokdl?url=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/tiktokdl?url=')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/cupcutdl?url="><i class="fas fa-download"></i> Capcut Downloader</a>
+                <button class="get-btn" onclick="fetchApi('/api/cupcutdl?url=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/cupcutdl?url=')">RESULT</button>
+            </li>
+        </ul>
+        <h2 class="other-apis" onclick="toggleVisibility('other-apis')"><i class="fas fa-poo"></i> OTHER APIs</h2>
+        <ul id="other-apis">
+                        <li>
+                <a href="/api/shorten?url="><i class="fas fa-link"></i> Url Shorten</a>
+                <button class="get-btn" onclick="fetchApi('/api/shorten?url=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/shorten?url=')">RESULT</button>
+                        </li>
+            <li>
+                <a href="/api/geoip?ip="><i class="fas fa-globe"></i> Geo Ip</a>
+                <button class="get-btn" onclick="fetchApi('/api/geoip?ip=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/geoip?ip=')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/ipinfo?ip="><i class="fas fa-globe"></i> Ip Info</a>
+                <button class="get-btn" onclick="fetchApi('/api/ipinfo?ip=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/ipinfo?ip=')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/microlink?url="><i class="fas fa-link"></i> Microlink</a>
+                <button class="get-btn" onclick="fetchApi('/api/microlink?url=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/microlink?ur=')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/remini?input="><i class="fas fa-image"></i> Rimini</a>
+                <button class="get-btn" onclick="fetchApi('/api/remini?input=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/remini?input=')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/imgur?link="><i class="fas fa-image"></i> Imgur</a>
+                <button class="get-btn" onclick="fetchApi('/api/imgur?link=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/imgur?link=')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/tinyurl?url="><i class="fas fa-link"></i> Tinyurl</a>
+                <button class="get-btn" onclick="fetchApi('/api/tinyurl?url=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/tinyurl?url=')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/sim?ask="><i class="fas fa-circle-check"></i> Sim</a>
+                <button class="get-btn" onclick="fetchApi('/api/sim?ask=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/sim?ask=jaymar')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/teach?ask="><i class="fas fa-circle-check"></i> Teach</a>
+                <button class="get-btn" onclick="fetchApi('/api/teach?ask=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/teach?ask=owner&ans=jaymar')">RESULT</button>
+            </li>
+        </ul>
+        <h2 class="random-apis" onclick="toggleVisibility('random-apis')"><i class="fas fa-circle-question"></i> RANDOM APIs</h2>
+        <ul id="random-apis">
+            <li>
+                <a href="/api/numbers"><i class="fas fa-hashtag"></i> Random Trivia</a>
+                <button class="get-btn" onclick="fetchApi('/api/numbers')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/numbers')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/dictionary"><i class="fas fa-book"></i> Dictionary</a>
+                <button class="get-btn" onclick="fetchApi('/api/dictionary')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/dictionary')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/advice"><i class="fas fa-comment"></i> Advice Slip</a>
+                <button class="get-btn" onclick="fetchApi('/api/advice')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/advice')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/joke"><i class="fas fa-laugh"></i> Joke</a>
+                <button class="get-btn" onclick="fetchApi('/api/joke')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/joke')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/trivia"><i class="fas fa-question"></i> Trivia</a>
+                <button class="get-btn" onclick="fetchApi('/api/trivia')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/trivia')">RESULT</button>
+            </li>
+          <li>
+                <a href="/api/genderize"><i class="fas fa-venus-mars"></i> Genderize</a>
+                <button class="get-btn" onclick="fetchApi('/api/genderize')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/genderize')">RESULT</button>
+                        </li>
+             <li>
+                <a href="/api/catfacts"><i class="fas fa-cat"></i> Cat Fact</a>
+                <button class="get-btn" onclick="fetchApi('/api/catfact')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/catfact')">RESULT</button>
+                        </li>
+            <li>
+            <a href="/api/dogpic"><i class="fas fa-dog"></i> Random Dog Image</a>
+                <button class="get-btn" onclick="fetchApi('/api/dogpic')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/dogpic')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/catpic"><i class="fas fa-cat"></i> Random Cat Image</a>
+                <button class="get-btn" onclick="fetchApi('/api/catpic')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/catpic')">RESULT</button>
+            </li>
+        </ul>
+        <h2 class="phub-tools" onclick="toggleVisibility('phub-tools')"><i class="fas fa-circle-info"></i> +18Phub API</h2>
+        <ul id="phub-tools">
+            <li>
+                <a href="/api/pornhub/random"><i class="fa-brands fa-phabricator"></i> Random Pornhub</a>
+                <button class="get-btn" onclick="fetchApi('/api/pornhub/random')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/pornhub/random')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/pornhub/search?search=hentai"><i class="fas fa-magnifying-glass-plus"></i> Pornhub Search</a>
+                <button class="get-btn" onclick="fetchApi('/api/pornhub/search?search=hentai')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/pornhub/search?search=hentai')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/pornhub/download?url="><i class="fas fa-download"></i> PornHub Downloader</a>
+                <button class="get-btn" onclick="fetchApi('/api/pornhub/download?url=')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/pornhub/download?url=')">RESULT</button>
+            </li>
+            <li>
+                <a href="/api/hentai"><i class="fas fa-circle-info"></i> Hentai</a>
+                <button class="get-btn" onclick="fetchApi('/api/hentai')">GET</button>
+                <button class="result-btn" onclick="redirectToResult('/api/hentai')">RESULT</button>
+            </li>
+        </ul>
+    </div>
+    <footer>© 2024 HeruDev. All rights reserved.</footer>
+
+    <audio autoplay loop>
+        <source src="https://files.catbox.moe/1w8w9d.mp4" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.all.min.js"></script>
+    <script src="/index.js"></script>
+    <script>
+        function toggleVisibility(id) {
+    const ul = document.getElementById(id);
+    ul.classList.toggle('expanded');
+}
+
+function fetchApi(apiUrl) {
+    Swal.fire({
+        title: 'Fetching Response',
+        allowOutsideClick: false,
+        onBeforeOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            Swal.close();
+            Swal.fire({
+                title: 'Result',
+                text: JSON.stringify(data, null, 2),
+                icon: 'success'
+            });
+        })
+        .catch(error => {
+            Swal.close();
+            Swal.fire({
+                title: 'Error',
+                text: error.message,
+                icon: 'error',
+            });
+        });
+}
+
+function redirectToResult(apiUrl) {
+    window.location.href = apiUrl;
+}
+
+// Spinner styles
+const style = document.createElement('style');
+style.innerHTML = `
+    .spinner {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #3498db;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+        margin-top: 20px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+`;
+document.head.appendChild(style);
+
+document.addEventListener('DOMContentLoaded', () => {
+    const dateTimeElem = document.getElementById('dateTime');
+    const pingElem = document.getElementById('ping');
+    const now = new Date();
+    dateTimeElem.textContent = `Current Date and Time: ${now.toLocaleString()}`;
+
+    const startTime = performance.now();
+    fetch('/ping')
+        .then(response => response.text())
+        .then(data => {
+            const endTime = performance.now();
+            const duration = endTime - startTime;
+            pingElem.textContent = `Ping: ${duration.toFixed(1)} ms`;
+        });
+});
+
+    </script>
+</body>
+</html>
