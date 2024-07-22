@@ -1,6 +1,6 @@
 const fs = require("fs");
 const { Hercai } = require('hercai');
-
+const { inject } = require('@vercel/analytics');
 const herc = new Hercai();
 const express = require('express');
 const axios = require('axios');
@@ -15,7 +15,7 @@ app.use(cors());
 app.set('json spaces', 4);
 app.use(express.json());
 app.use(express.static('public')); // Serve static files from the 'public' directory
-
+inject();
 // Root route
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
