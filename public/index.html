@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BGSBOT RESTAPI</title>
+    <title>BGSBOT RESTAPI ENTERTAINMENT</title>
 
     <!-- Favicon and Touch Icon -->
-    <link href="https://i.imgur.com/AUbvTGK.jpeg" rel="icon">
-    <link href="https://i.imgur.com/AUbvTGK.jpeg" rel="apple-touch-icon">
+    <link href="https://telegra.ph/file/9e4406bfd65531b29bd0f.jpg" rel="icon">
+    <link href="https://telegra.ph/file/9e4406bfd65531b29bd0f.jpg" rel="apple-touch-icon">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -18,26 +18,26 @@
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph Meta Tags for Social Media -->
-    <meta property="og:title" content="BGSBOT RESTAPI">
+    <meta property="og:title" content="BGSBOT RESTAPI ENTERTAINMENT">
     <meta property="og:description" content="BGSBOT RESTAPI - Your go-to API for AI and automation needs. Developed by BGSBOT Entertainment.">
-    <meta property="og:image" content="https://i.imgur.com/AUbvTGK.jpeg">
+    <meta property="og:image" content="https://telegra.ph/file/9e4406bfd65531b29bd0f.jpg">
     <meta property="og:url" content="http://www.bgsbot.my.id">
     <meta property="og:type" content="website">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="BGSBOT RESTAPI">
+    <meta name="twitter:title" content="BGSBOT RESTAPI ENTERTAINMENT">
     <meta name="twitter:description" content="BGSBOT RESTAPI - Your go-to API for AI and automation needs. Developed by BGSBOT Entertainment.">
-    <meta name="twitter:image" content="https://i.imgur.com/AUbvTGK.jpeg">
+    <meta name="twitter:image" content="https://telegra.ph/file/9e4406bfd65531b29bd0f.jpg">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "http://schema.org",
       "@type": "Organization",
-      "name": "BGSBOT Entertainment",
+      "name": "BGSBOT RESTAPI ENTERTAINMENT",
       "url": "http://www.bgsbot.my.id",
-      "logo": "https://i.imgur.com/AUbvTGK.jpeg",
+      "logo": "https://telegra.ph/file/9e4406bfd65531b29bd0f.jpg",
       "description": "BGSBOT RESTAPI - Your go-to API for AI and automation needs. Developed by BGSBOT Entertainment.",
       "contactPoint": {
         "@type": "ContactPoint",
@@ -206,16 +206,31 @@
             color: white !important;
         }
     </style>
+    <script>
+        function toggleVisibility(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('expanded');
+        }
+
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+
+        function openLink(url) {
+            window.open(url, '_blank');
+        }
+    </script>
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-server"></i> BGSBOT RESTAPI</h1>
+        <h1><i class="fas fa-server"></i> BGSBOT RESTAPI ENTERTAINMENT</h1>
         <p id="dateTime"></p>
         <p id="ping"></p>
-        <p>Welcome to my REST API</p>
+        <h2 class="btn" onclick="navigateTo('/ask')"><i class="fas fa-question-circle"></i> KE CHAT GPT-4</h2>
+        <h2 class="btn" onclick="openLink('https://chat.whatsapp.com/E6zAKerrNt329HJQ9cshX9')"><i class="fas fa-users"></i> Join Group WhatsApp </h2>
+        <h2 class="btn" onclick="navigateTo('https://wa.me/6285865953104')"><i class="fas fa-phone"></i> Bot Whatsaapp</h2>
         <h2 class="ai-tools" onclick="toggleVisibility('ai-tools')"><i class="fas fa-robot"></i> AI TOOLS API</h2>
         <ul id="ai-tools">
-            <li>
                 <a href="/api/gpt4o?question="><i class="fas fa-robot"></i> Gpt4o</a>
                 <button class="get-btn" onclick="fetchApi('/api/gpt4o?question=')">GET</button>
                 <button class="result-btn" onclick="redirectToResult('/api/gpt4o?question=hi')">RESULT</button>
@@ -291,7 +306,7 @@
         <h2 class="downloader-api" onclick="toggleVisibility('downloader-api')"><i class="fas fa-circle-down"></i> DOWNLOADER API</h2>
         <ul id="downloader-api">
 <li>
-                <a href="/api/anydl?url="><i class="fas fa-download"></i> Any Downloader</a>
+                <a href="/api/anydl?url="><i class="fas fa-download"></i> AIO Downloader</a>
                 <button class="get-btn" onclick="fetchApi('/api/anydl?url=')">GET</button>
                 <button class="result-btn" onclick="redirectToResult('/api/anydl?url=')">RESULT</button>
             </li>
@@ -431,7 +446,7 @@
             </li>
         </ul>
     </div>
-    <footer>© 2024 BgsBotDev All rights reserved.</footer>
+    <footer>© 2024 BGSBOT ENTERTAINMENT All rights reserved.</footer>
 
     <audio autoplay loop>
         <source src="https://files.catbox.moe/1w8w9d.mp4" type="audio/mpeg">
@@ -510,7 +525,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             const endTime = performance.now();
             const duration = endTime - startTime;
-            pingElem.textContent = `Ping: ${duration.toFixed(1)} ms`;
+            pingElem.textContent = `Kecepatan Response: ${duration.toFixed(1)} ms`;
         });
 });
 
