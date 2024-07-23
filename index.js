@@ -20,7 +20,9 @@ inject();
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
+app.get('/ask', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'gpt4.html'));
+});
 
 // gpt4o api
 app.get('/api/gpt4o', async (req, res) => {

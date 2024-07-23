@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tanya GPT-4</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="description" content="Tanyakan apa saja kepada GPT-4 dan dapatkan jawaban yang mendetail. Dikembangkan oleh BGSBOT ENTERTAINMENT.">
+  <meta property="og:title" content="Tanya GPT-4">
+  <meta property="og:description" content="Tanyakan apa saja kepada GPT-4 dan dapatkan jawaban yang mendetail. Dikembangkan oleh BGSBOT ENTERTAINMENT.">
+  <meta property="og:image" content="https://telegra.ph/file/9e4406bfd65531b29bd0f.jpg">
+  <meta property="og:url" content="https://example.com/tanya-gpt4">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin-top: 50px;
+    }
+    .card {
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+    }
+    .card-title {
+      color: #007bff;
+    }
+    .btn-primary, .btn-secondary {
+      border-radius: 25px;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .btn-primary:hover, .btn-secondary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+    .alert {
+      border-radius: 25px;
+    }
+    .input-group-text {
+      border-radius: 25px 0 0 25px;
+    }
+    .form-control {
+      border-radius: 0 25px 25px 0;
+    }
+    .response-container {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .response-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    footer {
+      margin-top: 20px;
+      text-align: center;
+      color: #6c757d;
+    }
+    .logo {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="https://telegra.ph/file/9e4406bfd65531b29bd0f.jpg" alt="Logo" class="logo">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title text-center">Tanya GPT-4</h3>
+        <form id="queryForm">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">?</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Masukkan pertanyaan Anda" aria-label="query" aria-describedby="basic-addon1" id="query" name="query" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Kirim</button>
+        </form>
+        <div id="response" class="response-container mt-4" style="display: none;">
+          <div class="response-title">Jawaban:</div>
+          <div id="responseContent"></div>
+        </div>
+        <a href="/" class="btn btn-secondary btn-block mt-3">Kembali ke Halaman Utama</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 Tanya GPT-4. Hak cipta dilindungi.</p>
+    <p>Dikembangkan oleh BGSBOT ENTERTAINMENT</p>
+    <p>Grup WhatsApp: <a href="https://chat.whatsapp.com/your-group-link" target="_blank">Bergabung dengan Grup</a></p>
+    <p>Hubungi Kami: <a href="tel:+6281234567890">+62 812-3456-7890</a></p>
+  </footer>
+
+  <script>
+    document.getElementById('queryForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const query = document.getElementById('query').value;
+
+      if (!query) {
+        document.getElementById('response').style.display = 'block';
+        document.getElementById('responseContent').innerHTML = '<div class="alert alert-danger" role="alert">Silakan masukkan pertanyaan.</div>';
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/v2/gpt4?query=' + encodeURIComponent(query));
+        const data = await response.json();
+
+        if (response.ok) {
+          document.getElementById('response').style.display = 'block';
+          document.getElementById('responseContent').innerHTML = '<p>' + data.response.replace(/\n/g, '<br>') + '</p>';
+        } else {
+          document.getElementById('response').style.display = 'block';
+          document.getElementById('responseContent').innerHTML = '<div class="alert alert-danger" role="alert">Error: ' + data.error + '</div>';
+        }
+      } catch (error) {
+        console.error('Error while making the request:', error);
+        document.getElementById('response').style.display = 'block';
+        document.getElementById('responseContent').innerHTML = '<div class="alert alert-danger" role="alert">Terjadi kesalahan saat memproses pertanyaan Anda.</div>';
+      }
+    });
+  </script>
+</body>
+</html>
